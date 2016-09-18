@@ -1,6 +1,7 @@
 /*
 	About: rustext converter
 	Author: ziggi
+	Thanks: Fro1sha for symbol codes
 */
 
 #include <map>
