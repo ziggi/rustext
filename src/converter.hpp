@@ -14,11 +14,11 @@ public:
 	struct Types
 	{
 		int SanLtd;
-		int Unknown1;
 		int OneC;
+		int Rush;
+		int Unknown1;
 		int Unknown2;
 		int Unknown3;
-		int Rush;
 	};
 
 	static void Process(std::string &string);
