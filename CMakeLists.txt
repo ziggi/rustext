@@ -18,19 +18,21 @@ add_definitions (-DPLUGIN_NAME="${PROJECT_NAME}" -DPLUGIN_VERSION="${PLUGIN_VERS
 
 set (CMAKE_SHARED_LIBRARY_PREFIX "")
 
-if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
-	set (CMAKE_C_FLAGS "-m32")
-endif ()
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-	set (CMAKE_CXX_FLAGS "-m32 -std=c++11 -Wno-multichar")
+if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	set (CMAKE_CXX_FLAGS "-std=c++11")
 endif ()
 
 add_samp_plugin (${PROJECT_NAME}
 	sdk/amxplugin.cpp
 	sdk/amxplugin2.cpp
 	src/main.cpp
+	src/main.hpp
 	src/natives.cpp
+	src/natives.hpp
 	src/sampfunctions.cpp
+	src/sampfunctions.hpp
 	src/converter.cpp
+	src/converter.hpp
+	src/common.hpp
 	src/exports.def
 )
