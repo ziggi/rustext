@@ -10,10 +10,9 @@
 #include "common.hpp"
 #include "sampfunctions.hpp"
 #include "converter.hpp"
+#include "russifier.hpp"
 
 extern logprintf_t logprintf;
-extern std::map <int, Converter::Types> gPlayerTypesMap;
-extern Converter::Types gDefaultType;
 
 // native SetPlayerRussifierType(playerid, RussifierType:type);
 cell AMX_NATIVE_CALL Natives::SetPlayerRussifierType(AMX *amx, cell *params)
@@ -31,7 +30,7 @@ cell AMX_NATIVE_CALL Natives::SetPlayerRussifierType(AMX *amx, cell *params)
 		return 0;
 	}
 
-	gPlayerTypesMap[playerid] = static_cast<Converter::Types>(type);
+	Russifier::SetPlayerType(playerid, type);
 	return 1;
 }
 
@@ -46,7 +45,7 @@ cell AMX_NATIVE_CALL Natives::GetPlayerRussifierType(AMX *amx, cell *params)
 		return 0;
 	}
 
-	return gPlayerTypesMap[playerid];
+	return Russifier::GetPlayerType(playerid);
 }
 
 // native SetDefaultRussifierType(RussifierType:type);
@@ -54,13 +53,13 @@ cell AMX_NATIVE_CALL Natives::SetDefaultRussifierType(AMX *amx, cell *params)
 {
 	CHECK_PARAMS(1, "SetDefaultRussifierType");
 
-	int type = static_cast<int>(params[2]);
+	int type = static_cast<int>(params[1]);
 
 	if (type < 0 || type >= Converter::TypesCount) {
 		return 0;
 	}
 
-	gDefaultType = static_cast<Converter::Types>(type);
+	Russifier::SetDefaultType(type);
 	return 1;
 }
 
@@ -69,7 +68,7 @@ cell AMX_NATIVE_CALL Natives::GetDefaultRussifierType(AMX *amx, cell *params)
 {
 	CHECK_PARAMS(0, "GetDefaultRussifierType");
 
-	return gDefaultType;
+	return Russifier::GetDefaultType();
 }
 
 // native GameTextForAll(const string[], time, style);
@@ -86,7 +85,7 @@ cell AMX_NATIVE_CALL Natives::GameTextForAll(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gDefaultType);
+	Converter::Process(string, Russifier::GetDefaultType());
 	return Samp::GameTextForAll(string.c_str(), time, style);
 }
 
@@ -105,7 +104,7 @@ cell AMX_NATIVE_CALL Natives::GameTextForPlayer(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gPlayerTypesMap[playerid]);
+	Converter::Process(string, Russifier::GetPlayerType(playerid));
 	return Samp::GameTextForPlayer(playerid, string.c_str(), time, style);
 }
 
@@ -123,7 +122,7 @@ cell AMX_NATIVE_CALL Natives::TextDrawCreate(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gDefaultType);
+	Converter::Process(string, Russifier::GetDefaultType());
 	return Samp::TextDrawCreate(x, y, string.c_str());
 }
 
@@ -140,7 +139,7 @@ cell AMX_NATIVE_CALL Natives::TextDrawSetString(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gDefaultType);
+	Converter::Process(string, Russifier::GetDefaultType());
 	return Samp::TextDrawSetString(text, string.c_str());
 }
 
@@ -159,7 +158,7 @@ cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gPlayerTypesMap[playerid]);
+	Converter::Process(string, Russifier::GetPlayerType(playerid));
 	return Samp::CreatePlayerTextDraw(playerid, x, y, string.c_str());
 }
 
@@ -177,7 +176,7 @@ cell AMX_NATIVE_CALL Natives::PlayerTextDrawSetString(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gPlayerTypesMap[playerid]);
+	Converter::Process(string, Russifier::GetPlayerType(playerid));
 	return Samp::PlayerTextDrawSetString(playerid, textid, string.c_str());
 }
 
@@ -198,7 +197,7 @@ cell AMX_NATIVE_CALL Natives::CreateMenu(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gDefaultType);
+	Converter::Process(string, Russifier::GetDefaultType());
 	return Samp::CreateMenu(string.c_str(), columns, x, y, col1width, col2width);
 }
 
@@ -216,7 +215,7 @@ cell AMX_NATIVE_CALL Natives::AddMenuItem(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gDefaultType);
+	Converter::Process(string, Russifier::GetDefaultType());
 	return Samp::AddMenuItem(menuid, column, string.c_str());
 }
 
@@ -234,6 +233,6 @@ cell AMX_NATIVE_CALL Natives::SetMenuColumnHeader(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, gDefaultType);
+	Converter::Process(string, Russifier::GetDefaultType());
 	return Samp::SetMenuColumnHeader(menuid, column, string.c_str());
 }

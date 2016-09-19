@@ -14,8 +14,6 @@
 
 logprintf_t logprintf;
 std::list <AMX *> gAmxList;
-std::map <int, Converter::Types> gPlayerTypesMap;
-Converter::Types gDefaultType = Converter::Types::SanLtd;
 
 amx_Function_t Samp::addr_GameTextForAll;
 amx_Function_t Samp::addr_GameTextForPlayer;
