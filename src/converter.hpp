@@ -7,24 +7,27 @@
 #define CONVERTER_H
 
 #include <map>
+#include <array>
 
 class Converter
 {
 public:
-	struct Types
+	enum Types
 	{
-		int SanLtd;
-		int OneC;
-		int Rush;
-		int Unknown1;
-		int Unknown2;
-		int Unknown3;
+		SanLtd,
+		OneC,
+		Rush,
+		Unknown1,
+		Unknown2,
+		Unknown3,
+
+		TypesCount
 	};
 
-	static void Process(std::string &string);
+	static void Process(std::string &string, Converter::Types type);
 
 private:
-	static std::map <int, Converter::Types> gConverterMap;
+	static std::map <int, std::array<int, Converter::Types::TypesCount>> gConverterMap;
 
 };
 

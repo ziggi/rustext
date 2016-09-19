@@ -5,9 +5,10 @@
 */
 
 #include <map>
+#include <array>
 #include "converter.hpp"
 
-std::map <int, Converter::Types> Converter::gConverterMap {
+std::map <int, std::array<int, Converter::Types::TypesCount>> Converter::gConverterMap {
 	/* а */ {224, {97,  97,  97,  97,  65,  65}},
 	/* А */ {192, {65,  65,  65,  65,  65,  65}},
 	/* б */ {225, {151, 152, 151, 151, 128, 54}},
@@ -78,11 +79,11 @@ std::map <int, Converter::Types> Converter::gConverterMap {
 	/* @ */ {64,  {124, 124, 124, 124, 124, 124}}
 };
 
-void Converter::Process(std::string &string)
+void Converter::Process(std::string &string, Converter::Types type)
 {
 	for (auto &c : string) {
 		if (gConverterMap.find(c & 0xFF) != gConverterMap.end()) {
-			c = gConverterMap[c & 0xFF].SanLtd;
+			c = gConverterMap[c & 0xFF][type];
 		}
 	}
 }

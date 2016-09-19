@@ -34,6 +34,12 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 }
 
 AMX_NATIVE_INFO PluginNatives[] = {
+	{"SetPlayerRussifierType", Natives::SetPlayerRussifierType},
+	{"GetPlayerRussifierType", Natives::GetPlayerRussifierType},
+
+	{"SetDefaultRussifierType", Natives::SetDefaultRussifierType},
+	{"GetDefaultRussifierType", Natives::GetDefaultRussifierType},
+
 	{0, 0}
 };
 
@@ -44,7 +50,7 @@ PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad( AMX *amx )
 {
-	g_pAmx.push_back(amx);
+	gAmxList.push_back(amx);
 
 	amx_Redirect(amx, "GameTextForAll", reinterpret_cast<ucell>(Natives::GameTextForAll), &Samp::addr_GameTextForAll);
 	amx_Redirect(amx, "GameTextForPlayer", reinterpret_cast<ucell>(Natives::GameTextForPlayer), &Samp::addr_GameTextForPlayer);
@@ -64,6 +70,6 @@ PLUGIN_EXPORT int PLUGIN_CALL AmxLoad( AMX *amx )
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxUnload( AMX *amx )
 {
-	g_pAmx.remove(amx);
+	gAmxList.remove(amx);
 	return AMX_ERR_NONE;
 }

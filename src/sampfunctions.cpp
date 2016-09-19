@@ -9,7 +9,7 @@
 #include "common.hpp"
 #include "sampfunctions.hpp"
 
-extern std::list <AMX *> g_pAmx;
+extern std::list <AMX *> gAmxList;
 extern logprintf_t logprintf;
 
 int Samp::GameTextForAll(const char *string, int time, int style)
@@ -24,17 +24,17 @@ int Samp::GameTextForAll(const char *string, int time, int style)
 	params[0] = PARAMS * sizeof(cell);
 
 	int length = strlen(string);
-	amx_Allot(g_pAmx.front(), length + 1, &params[1], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[1], &addr);
 	amx_SetString(addr, string, 0, 0, length + 1);
 
 	params[2] = time;
 	params[3] = style;
 
 	// execute
-	int result = addr_GameTextForAll(g_pAmx.front(), params);
+	int result = addr_GameTextForAll(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(gAmxList.front(), params[1]);
 	delete [] params;
 
 	return result;
@@ -53,17 +53,17 @@ int Samp::GameTextForPlayer(int playerid, const char *string, int time, int styl
 	params[1] = playerid;
 
 	int length = strlen(string);
-	amx_Allot(g_pAmx.front(), length + 1, &params[2], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[2], &addr);
 	amx_SetString(addr, string, 0, 0, length + 1);
 
 	params[3] = time;
 	params[4] = style;
 
 	// execute
-	int result = addr_GameTextForPlayer(g_pAmx.front(), params);
+	int result = addr_GameTextForPlayer(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[2]);
+	amx_Release(gAmxList.front(), params[2]);
 	delete [] params;
 
 	return result;
@@ -83,14 +83,14 @@ int Samp::TextDrawCreate(float x, float y, const char *text)
 	params[2] = amx_ftoc(y);
 
 	int length = strlen(text);
-	amx_Allot(g_pAmx.front(), length + 1, &params[3], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[3], &addr);
 	amx_SetString(addr, text, 0, 0, length + 1);
 
 	// execute
-	int result = addr_TextDrawCreate(g_pAmx.front(), params);
+	int result = addr_TextDrawCreate(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[3]);
+	amx_Release(gAmxList.front(), params[3]);
 	delete [] params;
 
 	return result;
@@ -109,14 +109,14 @@ int Samp::TextDrawSetString(int text, const char *string)
 	params[1] = text;
 
 	int length = strlen(string);
-	amx_Allot(g_pAmx.front(), length + 1, &params[2], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[2], &addr);
 	amx_SetString(addr, string, 0, 0, length + 1);
 
 	// execute
-	int result = addr_TextDrawSetString(g_pAmx.front(), params);
+	int result = addr_TextDrawSetString(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[2]);
+	amx_Release(gAmxList.front(), params[2]);
 	delete [] params;
 
 	return result;
@@ -137,14 +137,14 @@ int Samp::CreatePlayerTextDraw(int playerid, float x, float y, const char *text)
 	params[3] = amx_ftoc(y);
 
 	int length = strlen(text);
-	amx_Allot(g_pAmx.front(), length + 1, &params[4], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[4], &addr);
 	amx_SetString(addr, text, 0, 0, length + 1);
 
 	// execute
-	int result = addr_CreatePlayerTextDraw(g_pAmx.front(), params);
+	int result = addr_CreatePlayerTextDraw(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[4]);
+	amx_Release(gAmxList.front(), params[4]);
 	delete [] params;
 
 	return result;
@@ -164,14 +164,14 @@ int Samp::PlayerTextDrawSetString(int playerid, int text, const char *string)
 	params[2] = text;
 
 	int length = strlen(string);
-	amx_Allot(g_pAmx.front(), length + 1, &params[3], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[3], &addr);
 	amx_SetString(addr, string, 0, 0, length + 1);
 
 	// execute
-	int result = addr_PlayerTextDrawSetString(g_pAmx.front(), params);
+	int result = addr_PlayerTextDrawSetString(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[3]);
+	amx_Release(gAmxList.front(), params[3]);
 	delete [] params;
 
 	return result;
@@ -189,7 +189,7 @@ int Samp::CreateMenu(const char *title, int columns, float x, float y, float col
 	params[0] = PARAMS * sizeof(cell);
 
 	int length = strlen(title);
-	amx_Allot(g_pAmx.front(), length + 1, &params[1], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[1], &addr);
 	amx_SetString(addr, title, 0, 0, length + 1);
 
 	params[2] = columns;
@@ -199,10 +199,10 @@ int Samp::CreateMenu(const char *title, int columns, float x, float y, float col
 	params[6] = amx_ftoc(col2width);
 
 	// execute
-	int result = addr_CreateMenu(g_pAmx.front(), params);
+	int result = addr_CreateMenu(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(gAmxList.front(), params[1]);
 	delete [] params;
 
 	return result;
@@ -223,14 +223,14 @@ int Samp::AddMenuItem(int menuid, int column, const char *title)
 	params[2] = column;
 
 	int length = strlen(title);
-	amx_Allot(g_pAmx.front(), length + 1, &params[3], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[3], &addr);
 	amx_SetString(addr, title, 0, 0, length + 1);
 
 	// execute
-	int result = addr_AddMenuItem(g_pAmx.front(), params);
+	int result = addr_AddMenuItem(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[3]);
+	amx_Release(gAmxList.front(), params[3]);
 	delete [] params;
 
 	return result;
@@ -251,14 +251,14 @@ int Samp::SetMenuColumnHeader(int menuid, int column, const char *text)
 	params[2] = column;
 
 	int length = strlen(text);
-	amx_Allot(g_pAmx.front(), length + 1, &params[3], &addr);
+	amx_Allot(gAmxList.front(), length + 1, &params[3], &addr);
 	amx_SetString(addr, text, 0, 0, length + 1);
 
 	// execute
-	int result = addr_SetMenuColumnHeader(g_pAmx.front(), params);
+	int result = addr_SetMenuColumnHeader(gAmxList.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[3]);
+	amx_Release(gAmxList.front(), params[3]);
 	delete [] params;
 
 	return result;

@@ -6,11 +6,16 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <list>
+#include <map>
 #include "common.hpp"
 #include "sampfunctions.hpp"
+#include "converter.hpp"
 
 logprintf_t logprintf;
-std::list <AMX *> g_pAmx;
+std::list <AMX *> gAmxList;
+std::map <int, Converter::Types> gPlayerTypesMap;
+Converter::Types gDefaultType = Converter::Types::SanLtd;
 
 amx_Function_t Samp::addr_GameTextForAll;
 amx_Function_t Samp::addr_GameTextForPlayer;
