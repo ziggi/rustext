@@ -55,8 +55,8 @@ cell AMX_NATIVE_CALL Natives::TextDrawCreate(AMX *amx, cell *params)
 {
 	CHECK_PARAMS(3, "TextDrawCreate");
 
-	float x = static_cast<float>(params[1]);
-	float y = static_cast<float>(params[2]);
+	float x = amx_ctof(params[1]);
+	float y = amx_ctof(params[2]);
 	std::string string = amx_GetCppString(amx, params[3]);
 
 	int length = string.length();
@@ -91,8 +91,8 @@ cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 	CHECK_PARAMS(4, "CreatePlayerTextDraw");
 
 	int playerid = static_cast<int>(params[1]);
-	float x = static_cast<float>(params[2]);
-	float y = static_cast<float>(params[3]);
+	float x = amx_ctof(params[2]);
+	float y = amx_ctof(params[3]);
 	std::string string = amx_GetCppString(amx, params[4]);
 
 	int length = string.length();
@@ -129,10 +129,10 @@ cell AMX_NATIVE_CALL Natives::CreateMenu(AMX *amx, cell *params)
 
 	std::string string = amx_GetCppString(amx, params[1]);
 	int columns = static_cast<int>(params[2]);
-	float x = static_cast<float>(params[3]);
-	float y = static_cast<float>(params[4]);
-	float col1width = static_cast<float>(params[5]);
-	float col2width = static_cast<float>(params[6]);
+	float x = amx_ctof(params[3]);
+	float y = amx_ctof(params[4]);
+	float col1width = amx_ctof(params[5]);
+	float col2width = amx_ctof(params[6]);
 
 	int length = string.length();
 	if (length == 0) {

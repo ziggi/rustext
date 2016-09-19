@@ -6,6 +6,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <sdk/plugin.h>
+
 typedef void (*logprintf_t)(const char* format, ...);
 
 typedef int (AMX_NATIVE_CALL *amx_Function_t)(AMX *amx, cell *params);

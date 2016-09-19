@@ -10,10 +10,10 @@
 
 class Converter {
 public:
-	static bool Process(std::string &string);
+	static void Process(std::string &string);
 
 private:
-	static std::map <char, int> gConverterMap;
+	static std::map <int, int> gConverterMap;
 };
 
 #endif

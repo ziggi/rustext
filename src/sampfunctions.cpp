@@ -63,7 +63,7 @@ int Samp::GameTextForPlayer(int playerid, const char *string, int time, int styl
 	int result = addr_GameTextForPlayer(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[2]);
 	delete [] params;
 
 	return result;
@@ -90,7 +90,7 @@ int Samp::TextDrawCreate(float x, float y, const char *text)
 	int result = addr_TextDrawCreate(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[3]);
 	delete [] params;
 
 	return result;
@@ -116,7 +116,7 @@ int Samp::TextDrawSetString(int text, const char *string)
 	int result = addr_TextDrawSetString(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[2]);
 	delete [] params;
 
 	return result;
@@ -144,7 +144,7 @@ int Samp::CreatePlayerTextDraw(int playerid, float x, float y, const char *text)
 	int result = addr_CreatePlayerTextDraw(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[4]);
 	delete [] params;
 
 	return result;
@@ -171,7 +171,7 @@ int Samp::PlayerTextDrawSetString(int playerid, int text, const char *string)
 	int result = addr_PlayerTextDrawSetString(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[3]);
 	delete [] params;
 
 	return result;
@@ -230,7 +230,7 @@ int Samp::AddMenuItem(int menuid, int column, const char *title)
 	int result = addr_AddMenuItem(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[3]);
 	delete [] params;
 
 	return result;
@@ -258,7 +258,7 @@ int Samp::SetMenuColumnHeader(int menuid, int column, const char *text)
 	int result = addr_SetMenuColumnHeader(g_pAmx.front(), params);
 
 	// release
-	amx_Release(g_pAmx.front(), params[1]);
+	amx_Release(g_pAmx.front(), params[3]);
 	delete [] params;
 
 	return result;
