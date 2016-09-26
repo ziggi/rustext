@@ -21,6 +21,7 @@ public:
 		Unknown2,
 		Unknown3,
 		MG,
+		Community,
 
 		TypesCount
 	};
