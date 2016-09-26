@@ -14,6 +14,8 @@ enum RussifierType: {
 	RussifierType_Unknown1,
 	RussifierType_Unknown2,
 	RussifierType_Unknown3,
+	RussifierType_MG,
+	RussifierType_Community,
 }
 ```
 
