@@ -4,6 +4,9 @@ Fix Russian text plugin for SA-MP: GameText's, TextDraw's and Menu's. Default ru
 # Usage
 Just add rustext[.so] in your **server.cfg** to **plugins** key. If you want to get additional functionality you should copy **rustext.inc** to your libraries directory and add `#include "rustext"` in your script.
 
+# Russifiers
+You can download any of the usеd russifiers [here](https://mega.nz/#F!tVhlhDCT!FK1xFcBalTA0ySY_JsryMg).
+
 # Types
 
 ```Pawn
