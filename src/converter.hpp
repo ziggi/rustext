@@ -20,6 +20,7 @@ public:
 		Unknown1,
 		Unknown2,
 		Unknown3,
+		MG,
 
 		TypesCount
 	};
