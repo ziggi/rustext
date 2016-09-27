@@ -8,7 +8,8 @@ Just add rustext[.so] in your **server.cfg** to **plugins** key. If you want to 
 
 ```Pawn
 enum RussifierType: {
-	RussifierType_SanLtd,
+	RussifierType_Disabled = -1,
+	RussifierType_SanLtd = 0,
 	RussifierType_OneC,
 	RussifierType_Rush,
 	RussifierType_Unknown1,

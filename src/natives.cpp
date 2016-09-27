@@ -26,6 +26,11 @@ cell AMX_NATIVE_CALL Natives::SetPlayerRussifierType(AMX *amx, cell *params)
 		return 0;
 	}
 
+	if (type == -1) {
+		Russifier::DisablePlayer(playerid);
+		return 1;
+	}
+
 	if (type < 0 || type >= Converter::TypesCount) {
 		return 0;
 	}
@@ -54,6 +59,11 @@ cell AMX_NATIVE_CALL Natives::SetDefaultRussifierType(AMX *amx, cell *params)
 	CHECK_PARAMS(1, "SetDefaultRussifierType");
 
 	int type = static_cast<int>(params[1]);
+
+	if (type == -1) {
+		Russifier::DisableDefault();
+		return 1;
+	}
 
 	if (type < 0 || type >= Converter::TypesCount) {
 		return 0;
@@ -85,7 +95,10 @@ cell AMX_NATIVE_CALL Natives::GameTextForAll(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetDefaultType());
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
 	return Samp::GameTextForAll(string.c_str(), time, style);
 }
 
@@ -104,7 +117,10 @@ cell AMX_NATIVE_CALL Natives::GameTextForPlayer(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetPlayerType(playerid));
+	if (Russifier::IsPlayerEnabled(playerid) || Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetPlayerType(playerid));
+	}
+
 	return Samp::GameTextForPlayer(playerid, string.c_str(), time, style);
 }
 
@@ -122,7 +138,10 @@ cell AMX_NATIVE_CALL Natives::TextDrawCreate(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetDefaultType());
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
 	return Samp::TextDrawCreate(x, y, string.c_str());
 }
 
@@ -139,7 +158,10 @@ cell AMX_NATIVE_CALL Natives::TextDrawSetString(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetDefaultType());
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
 	return Samp::TextDrawSetString(text, string.c_str());
 }
 
@@ -158,7 +180,10 @@ cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetPlayerType(playerid));
+	if (Russifier::IsPlayerEnabled(playerid) || Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetPlayerType(playerid));
+	}
+
 	return Samp::CreatePlayerTextDraw(playerid, x, y, string.c_str());
 }
 
@@ -176,7 +201,10 @@ cell AMX_NATIVE_CALL Natives::PlayerTextDrawSetString(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetPlayerType(playerid));
+	if (Russifier::IsPlayerEnabled(playerid) || Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetPlayerType(playerid));
+	}
+
 	return Samp::PlayerTextDrawSetString(playerid, textid, string.c_str());
 }
 
@@ -197,7 +225,10 @@ cell AMX_NATIVE_CALL Natives::CreateMenu(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetDefaultType());
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
 	return Samp::CreateMenu(string.c_str(), columns, x, y, col1width, col2width);
 }
 
@@ -215,7 +246,10 @@ cell AMX_NATIVE_CALL Natives::AddMenuItem(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetDefaultType());
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
 	return Samp::AddMenuItem(menuid, column, string.c_str());
 }
 
@@ -233,6 +267,9 @@ cell AMX_NATIVE_CALL Natives::SetMenuColumnHeader(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, Russifier::GetDefaultType());
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
 	return Samp::SetMenuColumnHeader(menuid, column, string.c_str());
 }
