@@ -6,7 +6,7 @@
 #ifndef CONVERTER_H
 #define CONVERTER_H
 
-#include <map>
+#include <string>
 #include <array>
 
 class Converter
@@ -25,11 +25,13 @@ public:
 
 		TypesCount
 	};
+	typedef std::array<std::array<uint8_t, 256>, Types::TypesCount> CharMap_t;
 
-	static void Process(std::string &string, Converter::Types type);
+	Converter();
+	static void Process(std::string &string, Types type);
 
 private:
-	static std::map <int, std::array<int, Converter::Types::TypesCount>> gConverterMap;
+	static CharMap_t gCharMap;
 
 };
 
