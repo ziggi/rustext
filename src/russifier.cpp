@@ -44,7 +44,7 @@ Converter::Types Russifier::GetPlayerType(int playerid)
 	return gPlayerTypesMap[playerid];
 }
 
-bool Russifier::DisablePlayer(int playerid)
+void Russifier::DisablePlayer(int playerid)
 {
 	gIsPlayerEnabled[playerid] = false;
 }
@@ -74,7 +74,7 @@ Converter::Types Russifier::GetDefaultType()
 	return gDefaultType;
 }
 
-bool Russifier::DisableDefault()
+void Russifier::DisableDefault()
 {
 	gIsDefaultEnabled = false;
 }

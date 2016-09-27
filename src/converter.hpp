@@ -8,6 +8,7 @@
 
 #include <string>
 #include <array>
+#include <cstdint>
 
 class Converter
 {
@@ -25,7 +26,7 @@ public:
 
 		TypesCount
 	};
-	typedef std::array<std::array<uint8_t, 256>, Types::TypesCount> CharMap_t;
+	typedef std::array<std::array<uint8_t, Types::TypesCount>, 256> CharMap_t;
 
 	Converter();
 	static void Process(std::string &string, Types type);
