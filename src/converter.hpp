@@ -23,6 +23,7 @@ public:
 		Unknown3,
 		MG,
 		Community,
+		Ukraine,
 
 		TypesCount
 	};

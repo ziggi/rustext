@@ -20,6 +20,7 @@ enum RussifierType: {
 	RussifierType_Unknown3,
 	RussifierType_MG,
 	RussifierType_Community,
+	RussifierType_Ukraine,
 }
 
 // Natives

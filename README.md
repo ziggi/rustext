@@ -7,6 +7,12 @@ Just add rustext[.so] in your **server.cfg** to **plugins** key. If you want to 
 # Russifiers
 You can download any of the usеd russifiers [here](https://mega.nz/#F!tVhlhDCT!FK1xFcBalTA0ySY_JsryMg).
 
+# Examples
+Here you can see how it works with SanLtd russifier:
+![sanltd](https://cloud.githubusercontent.com/assets/1020099/18914954/db9b4ade-8597-11e6-8d72-783cfd24fb99.png)
+Here you can see how it works with Ukraine localization:
+![ukraine](https://cloud.githubusercontent.com/assets/1020099/18914955/db9d95dc-8597-11e6-9c2b-6ae5cc05bc72.png)
+
 # Types
 
 ```Pawn
@@ -20,6 +26,7 @@ enum RussifierType: {
 	RussifierType_Unknown3,
 	RussifierType_MG,
 	RussifierType_Community,
+	RussifierType_Ukraine,
 }
 ```
 
