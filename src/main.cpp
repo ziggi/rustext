@@ -12,6 +12,7 @@
 #include "sampfunctions.hpp"
 #include "converter.hpp"
 #include "russifier.hpp"
+#include "hooks.hpp"
 
 extern void *pAMXFunctions;
 
@@ -19,6 +20,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 {
 	pAMXFunctions = ppData[PLUGIN_DATA_AMX_EXPORTS];
 	logprintf = reinterpret_cast<logprintf_t>(ppData[PLUGIN_DATA_LOGPRINTF]);
+	GetRakServerInterface = reinterpret_cast<GetRakServerInterface_t>(ppData[PLUGIN_DATA_RAKSERVER]);
 
 	Converter();
 	Russifier(true, Converter::Types::SanLtd);

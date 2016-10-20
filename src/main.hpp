@@ -13,6 +13,8 @@
 #include "converter.hpp"
 
 logprintf_t logprintf;
+GetRakServerInterface_t GetRakServerInterface;
+
 std::list <AMX *> gAmxList;
 
 amx_Function_t Samp::addr_GameTextForAll;

@@ -10,8 +10,9 @@ include (AddSAMPPlugin)
 include_directories (
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	${CMAKE_CURRENT_SOURCE_DIR}/src
-	${CMAKE_CURRENT_SOURCE_DIR}/sdk
-	${CMAKE_CURRENT_SOURCE_DIR}/sdk/amx
+	${CMAKE_CURRENT_SOURCE_DIR}/lib
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/sdk
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/sdk/amx
 )
 
 add_definitions (-DPLUGIN_NAME="${PROJECT_NAME}" -DPLUGIN_VERSION="${PLUGIN_VERSION}")
@@ -23,8 +24,9 @@ if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 endif ()
 
 add_samp_plugin (${PROJECT_NAME}
-	sdk/amxplugin.cpp
-	sdk/amxplugin2.cpp
+	lib/sdk/amxplugin.cpp
+	lib/sdk/amxplugin2.cpp
+	lib/RakNet/BitStream.cpp
 	src/main.cpp
 	src/main.hpp
 	src/natives.cpp
@@ -35,6 +37,8 @@ add_samp_plugin (${PROJECT_NAME}
 	src/converter.hpp
 	src/russifier.cpp
 	src/russifier.hpp
+	src/hooks.cpp
+	src/hooks.hpp
 	src/common.hpp
 	src/exports.def
 )
