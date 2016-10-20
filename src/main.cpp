@@ -22,6 +22,10 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 	logprintf = reinterpret_cast<logprintf_t>(ppData[PLUGIN_DATA_LOGPRINTF]);
 	GetRakServerInterface = reinterpret_cast<GetRakServerInterface_t>(ppData[PLUGIN_DATA_RAKSERVER]);
 
+	if (!Hooks::Init()) {
+		logprintf(" " PLUGIN_NAME " " PLUGIN_VERSION " init error.");
+		return false;
+	}
 	Converter();
 	Russifier(true, Converter::Types::SanLtd);
 

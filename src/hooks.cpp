@@ -6,8 +6,22 @@
 #include <urmem.hpp>
 #include "common.hpp"
 #include "hooks.hpp"
+#include "russifier.hpp"
+
+#if _WIN32
+	#pragma warning(disable: 4996)
+#endif
 
 extern GetRakServerInterface_t GetRakServerInterface;
+
+std::shared_ptr<urmem::hook>
+	Hooks::_hook_get_rak_server_interface,
+	Hooks::_hook_rakserver__rpc;
+
+urmem::address_t
+	Hooks::_addr_rakserver,
+	Hooks::_addr_rpc,
+	Hooks::_addr_get_index_from_playerid;
 
 bool Hooks::Init(void)
 {
@@ -57,20 +71,34 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		auto write_offset = bitStream->GetWriteOffset();
 
 		int player_id = GetIndexFromPlayerID(playerId);
+		if (player_id == -1) {
+			return urmem::call_function<urmem::calling_convention::thiscall, bool>(
+				_addr_rpc, _this, uniqueID, bitStream, priority, reliability,
+				orderingChannel, playerId, broadcast, shiftTimestamp);
+		}
 
 		uint16_t textDrawID;
-		_CTextdraw *textDraw = new _CTextdraw;
+		char textDrawData[63];
 		uint16_t textLen;
 		char text[MAX_TEXT_DRAW_LINE];
+		std::string string;
 
-		RakNet::BitStream bStream;
 		bitStream->Read(textDrawID);
-		bitStream->Read(reinterpret_cast<char *>(textDraw), sizeof(_CTextdraw));
+		bitStream->Read(textDrawData, sizeof(textDrawData));
 		bitStream->Read(textLen);
 		bitStream->Read(text, textLen);
+		string = text;
 
-		// if (!Callbacks::OnServerSendRPC(GetIndexFromPlayerID(playerId), *uniqueID, bitStream))
-			// return false;
+		if (Russifier::IsPlayerEnabled(player_id) || Russifier::IsDefaultEnabled()) {
+			Converter::Process(string, Russifier::GetPlayerType(player_id));
+			strncpy(text, string.c_str(), textLen);
+			text[textLen] = 0;
+		}
+
+		bitStream->Write(textDrawID);
+		bitStream->Write(textDrawData, sizeof(textDrawData));
+		bitStream->Write(textLen);
+		bitStream->Write(text, textLen);
 
 		bitStream->SetReadOffset(read_offset);
 		bitStream->SetWriteOffset(write_offset);

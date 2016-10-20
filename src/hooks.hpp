@@ -6,6 +6,10 @@
 #ifndef HOOKS_H
 #define HOOKS_H
 
+#include <memory>
+#include <urmem.hpp>
+#include <RakNet/BitStream.h>
+
 #ifdef THISCALL
 #undef THISCALL
 #endif
@@ -16,18 +20,14 @@
 #define THISCALL
 #endif
 
-#include <memory>
-#include <urmem.hpp>
-#include <RakNet/BitStream.h>
-
 class Hooks {
 public:
-	bool Init();
+	static bool Init();
 
 	static int GetIndexFromPlayerID(const PlayerID &);
 
 private:
-	static void * HOOK_GetRakServerInterface(void);
+	static void *HOOK_GetRakServerInterface(void);
 	static bool THISCALL HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet::BitStream *bitStream, int priority,
 		int reliability, char orderingChannel, PlayerID playerId, bool broadcast, bool shiftTimestamp);
 
