@@ -44,6 +44,8 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 }
 
 AMX_NATIVE_INFO PluginNatives[] = {
+	{"GetRussifierVersion", Natives::GetRussifierVersion},
+
 	{"SetPlayerRussifierType", Natives::SetPlayerRussifierType},
 	{"GetPlayerRussifierType", Natives::GetPlayerRussifierType},
 

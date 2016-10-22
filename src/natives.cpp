@@ -14,6 +14,15 @@
 
 extern logprintf_t logprintf;
 
+// native GetRussifierVersion(version[], const size = sizeof(version));
+cell AMX_NATIVE_CALL Natives::GetRussifierVersion(AMX *amx, cell *params)
+{
+	CHECK_PARAMS(2, "GetRussifierVersion");
+
+	amx_SetCString(amx, params[1], PLUGIN_VERSION, params[2]);
+	return 1;
+}
+
 // native SetPlayerRussifierType(playerid, RussifierType:type);
 cell AMX_NATIVE_CALL Natives::SetPlayerRussifierType(AMX *amx, cell *params)
 {
