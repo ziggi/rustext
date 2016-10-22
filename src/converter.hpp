@@ -31,6 +31,7 @@ public:
 
 	Converter();
 	static void Process(std::string &string, Types type);
+	static void Process(char *string, Types type);
 
 private:
 	static CharMap_t gCharMap;
