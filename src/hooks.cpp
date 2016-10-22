@@ -66,18 +66,29 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 {
 	urmem::hook::raii scope(*_hook_rakserver__rpc);
 
-	if (uniqueID && bitStream && *uniqueID == RPC_ShowTextDraw) {
-		auto read_offset = bitStream->GetReadOffset();
-		auto write_offset = bitStream->GetWriteOffset();
+	// validate rpc parameters
+	if (!uniqueID || !bitStream) {
+		return RPC(_this, uniqueID, bitStream, priority, reliability,
+			orderingChannel, playerId, broadcast, shiftTimestamp);
+	}
 
-		// check on player valid
-		int player_id = GetIndexFromPlayerID(playerId);
-		if (player_id == -1 || (!Russifier::IsPlayerEnabled(player_id) && !Russifier::IsDefaultEnabled())) {
-			return urmem::call_function<urmem::calling_convention::thiscall, bool>(
-				_addr_rpc, _this, uniqueID, bitStream, priority, reliability,
-				orderingChannel, playerId, broadcast, shiftTimestamp);
-		}
+	if (*uniqueID != RPC_ShowTextDraw) {
+		return RPC(_this, uniqueID, bitStream, priority, reliability,
+			orderingChannel, playerId, broadcast, shiftTimestamp);
+	}
 
+	// remember default offsets
+	auto read_offset = bitStream->GetReadOffset();
+	auto write_offset = bitStream->GetWriteOffset();
+
+	// check on player valid
+	int player_id = GetIndexFromPlayerID(playerId);
+	if (player_id == -1 || !Russifier::IsEnabledForPlayer(player_id)) {
+		return RPC(_this, uniqueID, bitStream, priority, reliability,
+			orderingChannel, playerId, broadcast, shiftTimestamp);
+	}
+
+	if (*uniqueID == RPC_ShowTextDraw) {
 		uint16_t textLen;
 		char text[MAX_TEXT_DRAW_LINE];
 
@@ -95,14 +106,14 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		// write converted  text
 		bitStream->Write(textLen);
 		bitStream->Write(text, textLen);
-
-		// set default offsets
-		bitStream->SetReadOffset(read_offset);
-		bitStream->SetWriteOffset(write_offset);
 	}
 
-	return urmem::call_function<urmem::calling_convention::thiscall, bool>(
-		_addr_rpc, _this, uniqueID, bitStream, priority, reliability,
+	// set default offsets
+	bitStream->SetReadOffset(read_offset);
+	bitStream->SetWriteOffset(write_offset);
+
+	// call hooked function
+	return RPC(_this, uniqueID, bitStream, priority, reliability,
 		orderingChannel, playerId, broadcast, shiftTimestamp);
 }
 
@@ -110,4 +121,12 @@ int Hooks::GetIndexFromPlayerID(const PlayerID &id)
 {
 	return urmem::call_function<urmem::calling_convention::thiscall, int>(
 		_addr_get_index_from_playerid, _addr_rakserver, id);
+}
+
+bool Hooks::RPC(void *_this, RPCIndex *uniqueID, RakNet::BitStream *bitStream, int priority,
+	int reliability, char orderingChannel, PlayerID playerId, bool broadcast, bool shiftTimestamp)
+{
+	return urmem::call_function<urmem::calling_convention::thiscall, bool>(
+		_addr_rpc, _this, uniqueID, bitStream, priority, reliability,
+		orderingChannel, playerId, broadcast, shiftTimestamp);
 }

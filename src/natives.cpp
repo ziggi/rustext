@@ -22,7 +22,7 @@ cell AMX_NATIVE_CALL Natives::SetPlayerRussifierType(AMX *amx, cell *params)
 	int playerid = static_cast<int>(params[1]);
 	int type = static_cast<int>(params[2]);
 
-	if (playerid < 0 || playerid > MAX_PLAYERS) {
+	if (playerid < 0 || playerid >= MAX_PLAYERS) {
 		return 0;
 	}
 
@@ -46,7 +46,7 @@ cell AMX_NATIVE_CALL Natives::GetPlayerRussifierType(AMX *amx, cell *params)
 
 	int playerid = static_cast<int>(params[1]);
 
-	if (playerid < 0 || playerid > MAX_PLAYERS) {
+	if (playerid < 0 || playerid >= MAX_PLAYERS) {
 		return 0;
 	}
 
@@ -112,6 +112,10 @@ cell AMX_NATIVE_CALL Natives::GameTextForPlayer(AMX *amx, cell *params)
 	int time = static_cast<int>(params[3]);
 	int style = static_cast<int>(params[4]);
 
+	if (playerid < 0 || playerid >= MAX_PLAYERS) {
+		return 0;
+	}
+
 	int length = string.length();
 	if (length == 0) {
 		return 0;
@@ -175,6 +179,10 @@ cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 	float y = amx_ctof(params[3]);
 	std::string string = amx_GetCppString(amx, params[4]);
 
+	if (playerid < 0 || playerid >= MAX_PLAYERS) {
+		return 0;
+	}
+
 	int length = string.length();
 	if (length == 0) {
 		return 0;
@@ -195,6 +203,10 @@ cell AMX_NATIVE_CALL Natives::PlayerTextDrawSetString(AMX *amx, cell *params)
 	int playerid = static_cast<int>(params[1]);
 	int textid = static_cast<int>(params[2]);
 	std::string string = amx_GetCppString(amx, params[3]);
+
+	if (playerid < 0 || playerid >= MAX_PLAYERS) {
+		return 0;
+	}
 
 	int length = string.length();
 	if (length == 0) {
