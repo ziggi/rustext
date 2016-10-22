@@ -9,6 +9,7 @@
 class Natives {
 public:
 	static cell AMX_NATIVE_CALL GetRussifierVersion(AMX *amx, cell *params);
+	static cell AMX_NATIVE_CALL GetRussifierText(AMX *amx, cell *params);
 
 	static cell AMX_NATIVE_CALL SetPlayerRussifierType(AMX *amx, cell *params);
 	static cell AMX_NATIVE_CALL GetPlayerRussifierType(AMX *amx, cell *params);

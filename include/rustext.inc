@@ -25,6 +25,7 @@ enum RussifierType: {
 
 // Natives
 native GetRussifierVersion(version[], const size = sizeof(version));
+native GetRussifierText(RussifierType:type, string[], string_return[], const size = sizeof(string_return));
 
 native SetPlayerRussifierType(playerid, RussifierType:type);
 native RussifierType:GetPlayerRussifierType(playerid);

@@ -23,6 +23,27 @@ cell AMX_NATIVE_CALL Natives::GetRussifierVersion(AMX *amx, cell *params)
 	return 1;
 }
 
+// native GetRussifierText(RussifierType:type, string[], string_return[], const size = sizeof(string_return));
+cell AMX_NATIVE_CALL Natives::GetRussifierText(AMX *amx, cell *params)
+{
+	CHECK_PARAMS(4, "GetRussifierText");
+
+	int type = static_cast<int>(params[1]);
+	std::string string = amx_GetCppString(amx, params[2]);
+	cell *dest_addr;
+	amx_GetAddr(amx, params[3], &dest_addr);
+	int size = static_cast<int>(params[4]);
+
+	if (type < 0 || type >= Converter::TypesCount) {
+		return 0;
+	}
+
+	Converter::Process(string, static_cast<Converter::Types>(type));
+
+	amx_SetString(dest_addr, string.c_str(), 0, 0, size);
+	return 1;
+}
+
 // native SetPlayerRussifierType(playerid, RussifierType:type);
 cell AMX_NATIVE_CALL Natives::SetPlayerRussifierType(AMX *amx, cell *params)
 {
