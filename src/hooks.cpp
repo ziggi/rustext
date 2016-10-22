@@ -72,7 +72,9 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 			orderingChannel, playerId, broadcast, shiftTimestamp);
 	}
 
-	if (*uniqueID != RPC_ShowTextDraw) {
+	if (*uniqueID != RPC_DisplayGameText &&
+		*uniqueID != RPC_InitMenu &&
+		*uniqueID != RPC_ShowTextDraw) {
 		return RPC(_this, uniqueID, bitStream, priority, reliability,
 			orderingChannel, playerId, broadcast, shiftTimestamp);
 	}
@@ -88,7 +90,11 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 			orderingChannel, playerId, broadcast, shiftTimestamp);
 	}
 
-	if (*uniqueID == RPC_ShowTextDraw) {
+	if (*uniqueID == RPC_DisplayGameText) {
+
+	} else if (*uniqueID == RPC_InitMenu) {
+
+	} else if (*uniqueID == RPC_ShowTextDraw) {
 		uint16_t textLen;
 		char text[MAX_TEXT_DRAW_LINE];
 
