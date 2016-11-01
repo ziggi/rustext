@@ -48,3 +48,11 @@ cd build
 cmake ..
 make
 ```
+
+# Build (Visual Studio)
+```bash
+cd FCNPC
+mkdir build
+cd build
+cmake .. -G "Visual Studio 12"
+```
