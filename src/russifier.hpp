@@ -26,6 +26,8 @@ public:
 	static void DisableDefault();
 	static bool IsDefaultEnabled();
 
+	static bool IsEnabledForPlayer(int playerid);
+
 private:
 	static Converter::Types gPlayerTypesMap[MAX_PLAYERS];
 	static Converter::Types gDefaultType;

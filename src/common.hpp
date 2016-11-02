@@ -31,6 +31,8 @@ typedef int (AMX_NATIVE_CALL *amx_Function_t)(AMX *amx, cell *params);
 
 // rpc data
 enum RPCEnumeration {
+	RPC_DisplayGameText				= 73,
+	RPC_InitMenu					= 76,
 	RPC_ShowTextDraw				= 134,
 };
 

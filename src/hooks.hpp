@@ -11,13 +11,13 @@
 #include <RakNet/BitStream.h>
 
 #ifdef THISCALL
-#undef THISCALL
+	#undef THISCALL
 #endif
 
 #ifdef _WIN32
-#define THISCALL __thiscall
+	#define THISCALL __thiscall
 #else
-#define THISCALL
+	#define THISCALL
 #endif
 
 class Hooks {
@@ -25,6 +25,8 @@ public:
 	static bool Init();
 
 	static int GetIndexFromPlayerID(const PlayerID &);
+	static bool RPC(void *_this, RPCIndex *uniqueID, RakNet::BitStream *bitStream, int priority,
+		int reliability, char orderingChannel, PlayerID playerId, bool broadcast, bool shiftTimestamp);
 
 private:
 	static void *HOOK_GetRakServerInterface(void);

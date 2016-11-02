@@ -100,3 +100,28 @@ void Converter::Process(std::string &string, Converter::Types type)
 		}
 	}
 }
+
+void Converter::Process(char *string, Converter::Types type)
+{
+	uint8_t code;
+	while (string[i]) {
+		code = gCharMap[string[i] & 0xFF][type];
+		if (code != 0) {
+			string[i] = code;
+		}
+		i++;
+	}
+}
+
+void Converter::Process(char *string, Converter::Types type)
+{
+	uint i = 0;
+	uint8_t code;
+	while (string[i]) {
+		code = gCharMap[string[i] & 0xFF][type];
+		if (code != 0) {
+			string[i] = code;
+		}
+		i++;
+	}
+}
