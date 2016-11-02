@@ -67,15 +67,15 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 	urmem::hook::raii scope(*_hook_rakserver__rpc);
 
 	if (uniqueID && bitStream && *uniqueID == RPC_ShowTextDraw) {
-		auto read_offset = bitStream->GetReadOffset();
-		auto write_offset = bitStream->GetWriteOffset();
-
 		int player_id = GetIndexFromPlayerID(playerId);
 		if (player_id == -1) {
 			return urmem::call_function<urmem::calling_convention::thiscall, bool>(
 				_addr_rpc, _this, uniqueID, bitStream, priority, reliability,
 				orderingChannel, playerId, broadcast, shiftTimestamp);
 		}
+
+		auto read_offset = bitStream->GetReadOffset();
+		auto write_offset = bitStream->GetWriteOffset();
 
 		uint16_t textDrawID;
 		char textDrawData[63];
