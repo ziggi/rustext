@@ -36,7 +36,4 @@ enum RPCEnumeration {
 	RPC_ShowTextDraw				= 134,
 };
 
-// samp textdraw data
-#define MAX_TEXT_DRAW_LINE (1024)
-
 #endif

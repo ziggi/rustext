@@ -91,16 +91,14 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 	}
 
 	if (*uniqueID == RPC_DisplayGameText) {
+		const int MAX_GAME_TEXT_MESSAGE = 256;
 
-	} else if (*uniqueID == RPC_InitMenu) {
-
-	} else if (*uniqueID == RPC_ShowTextDraw) {
-		uint16_t textLen;
-		char text[MAX_TEXT_DRAW_LINE];
+		uint32_t textLen;
+		char text[MAX_GAME_TEXT_MESSAGE];
 
 		// skip textdraw id and data
-		bitStream->SetReadOffset((2 + 63) * 8);
-		bitStream->SetWriteOffset((2 + 63) * 8);
+		bitStream->SetReadOffset(32 + 32);
+		bitStream->SetWriteOffset(32 + 32);
 
 		// read text
 		bitStream->Read(textLen);
@@ -109,7 +107,94 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		// convert
 		Converter::Process(text, Russifier::GetPlayerType(player_id));
 
-		// write converted  text
+		// write converted text
+		bitStream->Write(textLen);
+		bitStream->Write(text, textLen);
+	} else if (*uniqueID == RPC_InitMenu) {
+		const int MAX_MENU_TEXT_SIZE = 32;
+		const int MAX_ITEMS = 12;
+		const int MAX_COLUMNS = 2;
+
+		int offsetToHeader;
+		uint32_t isTwoColumns;
+		char title[MAX_MENU_TEXT_SIZE];
+		uint8_t	itemsCount[MAX_COLUMNS];
+		char items[MAX_ITEMS][MAX_COLUMNS][MAX_MENU_TEXT_SIZE];
+		char headers[MAX_COLUMNS][MAX_MENU_TEXT_SIZE];
+
+		// skip menu id
+		bitStream->SetReadOffset(8);
+
+		// read text
+		bitStream->Read(isTwoColumns);
+		bitStream->Read(title, MAX_MENU_TEXT_SIZE);
+
+		// skip menu id, text, pos, width
+		offsetToHeader = 8 + 32 + MAX_MENU_TEXT_SIZE + 32 + 32 + 32;
+		if (isTwoColumns) {
+			offsetToHeader += 32;
+		}
+		// skip interaction
+		offsetToHeader += 32 + MAX_ITEMS * 32;
+		bitStream->SetReadOffset(offsetToHeader);
+
+		// read headers and items
+		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
+			bitStream->Read(headers[i], MAX_MENU_TEXT_SIZE);
+			bitStream->Read(itemsCount[i]);
+
+			for (uint8_t j = 0; j < itemsCount[j]; j++) {
+				bitStream->Read(items[j][i], MAX_MENU_TEXT_SIZE);
+			}
+		}
+
+		// convert
+		Converter::Types playerRussifierType = Russifier::GetPlayerType(player_id);
+
+		Converter::Process(title, playerRussifierType);
+
+		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
+			Converter::Process(headers[i], playerRussifierType);
+
+			for (uint8_t j = 0; j < itemsCount[j]; j++) {
+				Converter::Process(items[j][i], playerRussifierType);
+			}
+		}
+
+		// set write offsets: skip menu id and columns status
+		bitStream->SetWriteOffset(8 + 32);
+		// write converted text
+		bitStream->Write(title);
+
+		// skip menu id, text, pos, width and interaction
+		bitStream->SetWriteOffset(offsetToHeader);
+		// write converted headers and items
+		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
+			bitStream->Write(headers[i], MAX_MENU_TEXT_SIZE);
+			bitStream->Write(itemsCount[i]);
+
+			for (uint8_t j = 0; j < itemsCount[j]; j++) {
+				bitStream->Write(items[j][i], MAX_MENU_TEXT_SIZE);
+			}
+		}
+	} else if (*uniqueID == RPC_ShowTextDraw) {
+		const int MAX_TEXT_DRAW_LINE = 1024;
+
+		uint16_t textLen;
+		char text[MAX_TEXT_DRAW_LINE];
+
+		// skip textdraw id and data
+		bitStream->SetReadOffset(16 + 63 * 8);
+		bitStream->SetWriteOffset(16 + 63 * 8);
+
+		// read text
+		bitStream->Read(textLen);
+		bitStream->Read(text, textLen);
+
+		// convert
+		Converter::Process(text, Russifier::GetPlayerType(player_id));
+
+		// write converted text
 		bitStream->Write(textLen);
 		bitStream->Write(text, textLen);
 	}
