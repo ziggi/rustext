@@ -31,8 +31,6 @@ add_samp_plugin (${PROJECT_NAME}
 	src/main.hpp
 	src/natives.cpp
 	src/natives.hpp
-	src/sampfunctions.cpp
-	src/sampfunctions.hpp
 	src/converter.cpp
 	src/converter.hpp
 	src/russifier.cpp

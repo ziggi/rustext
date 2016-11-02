@@ -64,20 +64,6 @@ PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad( AMX *amx )
 {
 	gAmxList.push_back(amx);
-
-	amx_Redirect(amx, "GameTextForAll", reinterpret_cast<ucell>(Natives::GameTextForAll), &Samp::addr_GameTextForAll);
-	amx_Redirect(amx, "GameTextForPlayer", reinterpret_cast<ucell>(Natives::GameTextForPlayer), &Samp::addr_GameTextForPlayer);
-
-	amx_Redirect(amx, "TextDrawCreate", reinterpret_cast<ucell>(Natives::TextDrawCreate), &Samp::addr_TextDrawCreate);
-	amx_Redirect(amx, "TextDrawSetString", reinterpret_cast<ucell>(Natives::TextDrawSetString), &Samp::addr_TextDrawSetString);
-
-	amx_Redirect(amx, "CreatePlayerTextDraw", reinterpret_cast<ucell>(Natives::CreatePlayerTextDraw), &Samp::addr_CreatePlayerTextDraw);
-	amx_Redirect(amx, "PlayerTextDrawSetString", reinterpret_cast<ucell>(Natives::PlayerTextDrawSetString), &Samp::addr_PlayerTextDrawSetString);
-
-	amx_Redirect(amx, "CreateMenu", reinterpret_cast<ucell>(Natives::CreateMenu), &Samp::addr_CreateMenu);
-	amx_Redirect(amx, "AddMenuItem", reinterpret_cast<ucell>(Natives::AddMenuItem), &Samp::addr_AddMenuItem);
-	amx_Redirect(amx, "SetMenuColumnHeader", reinterpret_cast<ucell>(Natives::SetMenuColumnHeader), &Samp::addr_SetMenuColumnHeader);
-
 	return amx_Register(amx, PluginNatives, -1);
 }
 
