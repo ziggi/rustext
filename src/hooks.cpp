@@ -91,25 +91,24 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 	}
 
 	if (*uniqueID == RPC_DisplayGameText) {
-		const int MAX_GAME_TEXT_MESSAGE = 256;
-
-		uint32_t textLen;
-		char text[MAX_GAME_TEXT_MESSAGE];
-
 		// skip textdraw id and data
 		bitStream->SetReadOffset(32 + 32);
-		bitStream->SetWriteOffset(32 + 32);
 
 		// read text
+		uint32_t textLen;
 		bitStream->Read(textLen);
+
+		char *text = new char[textLen];
 		bitStream->Read(text, textLen);
 
 		// convert
 		Converter::Process(text, Russifier::GetPlayerType(player_id));
 
 		// write converted text
-		bitStream->Write(textLen);
+		bitStream->SetWriteOffset(32 + 32 + 32);
 		bitStream->Write(text, textLen);
+
+		delete text;
 	} else if (*uniqueID == RPC_InitMenu) {
 		const int MAX_MENU_TEXT_SIZE = 32;
 		const int MAX_ITEMS = 12;
@@ -178,25 +177,26 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 			}
 		}
 	} else if (*uniqueID == RPC_ShowTextDraw) {
-		const int MAX_TEXT_DRAW_LINE = 1024;
-
-		uint16_t textLen;
-		char text[MAX_TEXT_DRAW_LINE];
+		const int offsetToText = 16 + 63 * 8;
 
 		// skip textdraw id and data
-		bitStream->SetReadOffset(16 + 63 * 8);
-		bitStream->SetWriteOffset(16 + 63 * 8);
+		bitStream->SetReadOffset(offsetToText);
 
 		// read text
+		uint16_t textLen;
 		bitStream->Read(textLen);
+
+		char *text = new char[textLen];
 		bitStream->Read(text, textLen);
 
 		// convert
 		Converter::Process(text, Russifier::GetPlayerType(player_id));
 
-		// write converted text
-		bitStream->Write(textLen);
+		// write converted text=
+		bitStream->SetWriteOffset(offsetToText);
 		bitStream->Write(text, textLen);
+
+		delete text;
 	}
 
 	// set default offsets

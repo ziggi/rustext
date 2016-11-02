@@ -103,13 +103,7 @@ void Converter::Process(std::string &string, Converter::Types type)
 
 void Converter::Process(char *string, Converter::Types type)
 {
-	uint32_t i = 0;
-	uint8_t code;
-	while (string[i]) {
-		code = gCharMap[string[i] & 0xFF][type];
-		if (code != 0) {
-			string[i] = code;
-		}
-		i++;
-	}
+	std::string str(string);
+	Process(str, type);
+	strcpy(string, str.c_str());
 }
