@@ -108,7 +108,7 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		bitStream->SetWriteOffset(32 + 32 + 32);
 		bitStream->Write(text, textLen);
 
-		delete text;
+		delete [] text;
 	} else if (*uniqueID == RPC_InitMenu) {
 		const int MAX_MENU_TEXT_SIZE = 32;
 		const int MAX_ITEMS = 12;
@@ -192,11 +192,11 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		// convert
 		Converter::Process(text, Russifier::GetPlayerType(player_id));
 
-		// write converted text=
-		bitStream->SetWriteOffset(offsetToText);
+		// write converted text
+		bitStream->SetWriteOffset(offsetToText + 16);
 		bitStream->Write(text, textLen);
 
-		delete text;
+		delete [] text;
 	}
 
 	// set default offsets
