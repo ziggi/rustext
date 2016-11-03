@@ -129,21 +129,28 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		bitStream->Read(title, MAX_MENU_TEXT_SIZE);
 
 		// skip menu id, text, pos, width
-		offsetToHeader = 8 + 32 + MAX_MENU_TEXT_SIZE + 32 + 32 + 32;
+		offsetToHeader = 8 + 32 + MAX_MENU_TEXT_SIZE * 8 + 32 + 32 + 32;
 		if (isTwoColumns) {
 			offsetToHeader += 32;
 		}
-		// skip interaction
+		// skip interaction menu and rows
 		offsetToHeader += 32 + MAX_ITEMS * 32;
 		bitStream->SetReadOffset(offsetToHeader);
 
 		// read headers and items
-		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
-			bitStream->Read(headers[i], MAX_MENU_TEXT_SIZE);
-			bitStream->Read(itemsCount[i]);
+		bitStream->Read(headers[0], MAX_MENU_TEXT_SIZE);
+		bitStream->Read(itemsCount[0]);
 
-			for (uint8_t j = 0; j < itemsCount[j]; j++) {
-				bitStream->Read(items[j][i], MAX_MENU_TEXT_SIZE);
+		for (uint8_t i = 0; i < itemsCount[0]; i++) {
+			bitStream->Read(items[i][0], MAX_MENU_TEXT_SIZE);
+		}
+
+		if (isTwoColumns) {
+			bitStream->Read(headers[1], MAX_MENU_TEXT_SIZE);
+			bitStream->Read(itemsCount[1]);
+
+			for (uint8_t i = 0; i < itemsCount[1]; i++) {
+				bitStream->Read(items[i][1], MAX_MENU_TEXT_SIZE);
 			}
 		}
 
@@ -163,17 +170,24 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		// set write offsets: skip menu id and columns status
 		bitStream->SetWriteOffset(8 + 32);
 		// write converted text
-		bitStream->Write(title);
+		bitStream->Write(title, MAX_MENU_TEXT_SIZE);
 
 		// skip menu id, text, pos, width and interaction
 		bitStream->SetWriteOffset(offsetToHeader);
 		// write converted headers and items
-		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
-			bitStream->Write(headers[i], MAX_MENU_TEXT_SIZE);
-			bitStream->Write(itemsCount[i]);
+		bitStream->Write(headers[0], MAX_MENU_TEXT_SIZE);
+		bitStream->Write(itemsCount[0]);
 
-			for (uint8_t j = 0; j < itemsCount[j]; j++) {
-				bitStream->Write(items[j][i], MAX_MENU_TEXT_SIZE);
+		for (uint8_t i = 0; i < itemsCount[0]; i++) {
+			bitStream->Write(items[i][0], MAX_MENU_TEXT_SIZE);
+		}
+
+		if (isTwoColumns) {
+			bitStream->Write(headers[1], MAX_MENU_TEXT_SIZE);
+			bitStream->Write(itemsCount[1]);
+
+			for (uint8_t i = 0; i < itemsCount[1]; i++) {
+				bitStream->Write(items[i][1], MAX_MENU_TEXT_SIZE);
 			}
 		}
 	} else if (*uniqueID == RPC_ShowTextDraw) {
