@@ -9,7 +9,6 @@
 #include "main.hpp"
 #include "natives.hpp"
 #include "common.hpp"
-#include "sampfunctions.hpp"
 #include "converter.hpp"
 #include "russifier.hpp"
 #include "hooks.hpp"
