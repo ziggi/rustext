@@ -13,6 +13,48 @@ Here you can see how it works with SanLtd russifier:
 Here you can see how it works with Ukraine localization:
 ![ukraine](https://cloud.githubusercontent.com/assets/1020099/18914955/db9d95dc-8597-11e6-9c2b-6ae5cc05bc72.png)
 
+# Example of usage
+```Pawn
+#include <a_samp>
+#include <rustext>
+
+const
+	Float:TEXT_BASE_X = 240.0,
+	Float:TEXT_BASE_Y = 200.0,
+	TEXT_RUSSIFIERS_COUNT = sizeof(TextRusTD) - 1; // minus Ukraine
+
+static
+	TextRusTD[RussifierType];
+
+public OnGameModeInit()
+{
+	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
+		TextRusTD[RussifierType:i] = _:TextDrawCreate(TEXT_BASE_X, TEXT_BASE_Y + 10.0 * i, "Я могу прочитать этот текст, это мой русификатор");
+		TextDrawSetSelectable(Text:TextRusTD[RussifierType:i], 1);
+	}
+	return 1;
+}
+
+public OnPlayerSpawn(playerid)
+{
+	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
+		TextDrawShowForPlayer(playerid, Text:TextRusTD[RussifierType:i]);
+	}
+	return 1;
+}
+
+public OnPlayerClickTextDraw(playerid, Text:clickedid)
+{
+	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
+		if (TextRusTD[RussifierType:i] == _:clickedid) {
+			SetPlayerRussifierType(playerid, RussifierType:i);
+			return 1;
+		}
+	}
+	return 0;
+}
+```
+
 # Types
 
 ```Pawn
