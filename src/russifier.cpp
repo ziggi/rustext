@@ -83,3 +83,12 @@ bool Russifier::IsDefaultEnabled()
 {
 	return gIsDefaultEnabled;
 }
+
+/*
+	Other
+*/
+
+bool Russifier::IsEnabledForPlayer(int playerid)
+{
+	return IsPlayerEnabled(playerid) || IsDefaultEnabled();
+}

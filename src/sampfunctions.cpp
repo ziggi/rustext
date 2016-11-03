@@ -10,7 +10,6 @@
 #include "sampfunctions.hpp"
 
 extern std::list <AMX *> gAmxList;
-extern logprintf_t logprintf;
 
 int Samp::GameTextForAll(const char *string, int time, int style)
 {
