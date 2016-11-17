@@ -10,7 +10,7 @@
 #pragma library rustext
 
 // Enums
-enum RussifierType: {
+enum RussifierType {
 	RussifierType_Disabled = -1,
 	RussifierType_SanLtd = 0,
 	RussifierType_OneC,
