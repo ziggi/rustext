@@ -18,18 +18,20 @@ Here you can see how it works with Ukraine localization:
 #include <a_samp>
 #include <rustext>
 
+static
+	TextRusTD[RussifierType];
+
 const
 	Float:TEXT_BASE_X = 240.0,
 	Float:TEXT_BASE_Y = 200.0,
 	TEXT_RUSSIFIERS_COUNT = sizeof(TextRusTD) - 1; // minus Ukraine
 
-static
-	TextRusTD[RussifierType];
-
 public OnGameModeInit()
 {
 	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
-		TextRusTD[RussifierType:i] = _:TextDrawCreate(TEXT_BASE_X, TEXT_BASE_Y + 10.0 * i, "Я могу прочитать этот текст, это мой русификатор");
+		TextRusTD[RussifierType:i] = _:TextDrawCreate(TEXT_BASE_X,
+		                                              TEXT_BASE_Y + 10.0 * i,
+		                                              "Я могу прочитать этот текст, это мой русификатор");
 		TextDrawSetSelectable(Text:TextRusTD[RussifierType:i], 1);
 	}
 	return 1;
@@ -38,6 +40,7 @@ public OnGameModeInit()
 public OnPlayerSpawn(playerid)
 {
 	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
+		SetPlayerRussifierType(playerid, RussifierType:i);
 		TextDrawShowForPlayer(playerid, Text:TextRusTD[RussifierType:i]);
 	}
 	return 1;
