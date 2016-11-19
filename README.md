@@ -61,7 +61,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 # Types
 
 ```Pawn
-enum RussifierType: {
+enum RussifierType {
 	RussifierType_Disabled = -1,
 	RussifierType_SanLtd = 0,
 	RussifierType_OneC,
