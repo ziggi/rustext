@@ -22,17 +22,18 @@ static
 	TextRusTD[RussifierType];
 
 const
-	Float:TEXT_BASE_X = 240.0,
-	Float:TEXT_BASE_Y = 200.0,
+	Float:TEXT_BASE_X = 150.0,
+	Float:TEXT_BASE_Y = 150.0,
 	TEXT_RUSSIFIERS_COUNT = sizeof(TextRusTD) - 1; // minus Ukraine
 
 public OnGameModeInit()
 {
 	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
 		TextRusTD[RussifierType:i] = _:TextDrawCreate(TEXT_BASE_X,
-		                                              TEXT_BASE_Y + 10.0 * i,
-		                                              "Я могу прочитать этот текст, это мой русификатор");
+													  TEXT_BASE_Y + 15.0 * i,
+													  "Я могу прочитать этот текст, это мой русификатор");
 		TextDrawSetSelectable(Text:TextRusTD[RussifierType:i], 1);
+		TextDrawTextSize(Text:TextRusTD[RussifierType:i], 600.0, 10.0);
 	}
 	return 1;
 }
@@ -43,6 +44,7 @@ public OnPlayerSpawn(playerid)
 		SetPlayerRussifierType(playerid, RussifierType:i);
 		TextDrawShowForPlayer(playerid, Text:TextRusTD[RussifierType:i]);
 	}
+	SelectTextDraw(playerid, 0xAA3333FF);
 	return 1;
 }
 
@@ -51,8 +53,9 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
 		if (TextRusTD[RussifierType:i] == _:clickedid) {
 			SetPlayerRussifierType(playerid, RussifierType:i);
-			return 1;
+			CancelSelectTextDraw(playerid);
 		}
+		TextDrawHideForPlayer(playerid, Text:TextRusTD[RussifierType:i]);
 	}
 	return 0;
 }
