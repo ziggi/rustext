@@ -102,7 +102,7 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		bitStream->Read(text, textLen);
 
 		// convert
-		Converter::Process(text, Russifier::GetPlayerType(player_id));
+		Converter::Process(text, textLen, Russifier::GetPlayerType(player_id));
 
 		// write converted text
 		bitStream->SetWriteOffset(32 + 32 + 32);
@@ -157,13 +157,13 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		// convert
 		Converter::Types playerRussifierType = Russifier::GetPlayerType(player_id);
 
-		Converter::Process(title, playerRussifierType);
+		Converter::Process(title, MAX_MENU_TEXT_SIZE, playerRussifierType);
 
 		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
-			Converter::Process(headers[i], playerRussifierType);
+			Converter::Process(headers[i], MAX_MENU_TEXT_SIZE, playerRussifierType);
 
 			for (uint8_t j = 0; j < itemsCount[j]; j++) {
-				Converter::Process(items[j][i], playerRussifierType);
+				Converter::Process(items[j][i], MAX_MENU_TEXT_SIZE, playerRussifierType);
 			}
 		}
 
@@ -204,7 +204,7 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		bitStream->Read(text, textLen);
 
 		// convert
-		Converter::Process(text, Russifier::GetPlayerType(player_id));
+		Converter::Process(text, textLen, Russifier::GetPlayerType(player_id));
 
 		// write converted text
 		bitStream->SetWriteOffset(offsetToText + 16);

@@ -101,10 +101,10 @@ void Converter::Process(std::string &string, Converter::Types type)
 	}
 }
 
-void Converter::Process(char *string, Converter::Types type)
+void Converter::Process(char *string, uint32_t length, Converter::Types type)
 {
 	uint8_t code;
-	for (uint32_t i = 0; string[i] != 0; i++) {
+	for (uint32_t i = 0; i < length; i++) {
 		code = gCharMap[string[i] & 0xFF][type];
 		if (code != 0) {
 			string[i] = code;

@@ -31,7 +31,7 @@ cell AMX_NATIVE_CALL Natives::GetRussifierText(AMX *amx, cell *params)
 	cell *dest_addr;
 
 	int type = static_cast<int>(params[1]);
-	amx_GetCString(amx, params[2], string);
+	uint32_t length = amx_GetCString(amx, params[2], string);
 	amx_GetAddr(amx, params[3], &dest_addr);
 	int size = static_cast<int>(params[4]);
 
@@ -39,7 +39,7 @@ cell AMX_NATIVE_CALL Natives::GetRussifierText(AMX *amx, cell *params)
 		return 0;
 	}
 
-	Converter::Process(string, static_cast<Converter::Types>(type));
+	Converter::Process(string, length, static_cast<Converter::Types>(type));
 
 	amx_SetString(dest_addr, string, 0, 0, size);
 	return 1;
