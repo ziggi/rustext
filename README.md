@@ -24,7 +24,7 @@ static
 const
 	Float:TEXT_BASE_X = 150.0,
 	Float:TEXT_BASE_Y = 150.0,
-	TEXT_RUSSIFIERS_COUNT = sizeof(TextRusTD) - 1; // minus Ukraine
+	TEXT_RUSSIFIERS_COUNT = 7; // only Russian localizations
 
 public OnGameModeInit()
 {
