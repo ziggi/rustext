@@ -24,6 +24,7 @@ public:
 		MG,
 		Community,
 		Ukraine,
+		Hungarian,
 
 		TypesCount
 	};
