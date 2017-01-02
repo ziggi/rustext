@@ -35,13 +35,9 @@ native SetDefaultRussifierType(RussifierType:type);
 native RussifierType:GetDefaultRussifierType();
 
 // Update checker
-#if !defined HTTP
-	#tryinclude <a_http>
-#endif
-
-#if !defined HTTP
-	#tryinclude "a_http"
-#endif
+#tryinclude <a_http>
+#tryinclude "a_http"
+#tryinclude "../a_http"
 
 #if defined HTTP
 	#if defined FILTERSCRIPT
@@ -90,7 +86,10 @@ native RussifierType:GetDefaultRussifierType();
 
 	static stock RusText_SendVersionRequest()
 	{
-		HTTP(0, HTTP_GET, "ziggi.org/github/lastrelease.php?owner=ziggi&repo=rustext&elem=tag_name", "", "RusText_OnRequestResponse");
+		HTTP(0, HTTP_GET,
+		     "ziggi.org/github/lastrelease.php?owner=ziggi&repo=rustext&elem=tag_name",
+		     "",
+		     "RusText_OnRequestResponse");
 	}
 
 	forward RusText_OnRequestResponse(index, response_code, data[]);
