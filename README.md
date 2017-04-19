@@ -30,8 +30,8 @@ public OnGameModeInit()
 {
 	for (new i; i < TEXT_RUSSIFIERS_COUNT; i++) {
 		TextRusTD[RussifierType:i] = _:TextDrawCreate(TEXT_BASE_X,
-													  TEXT_BASE_Y + 15.0 * i,
-													  "Я могу прочитать этот текст, это мой русификатор");
+		                                              TEXT_BASE_Y + 15.0 * i,
+		                                              "Я могу прочитать этот текст, это мой русификатор");
 		TextDrawSetSelectable(Text:TextRusTD[RussifierType:i], 1);
 		TextDrawTextSize(Text:TextRusTD[RussifierType:i], 600.0, 10.0);
 	}
