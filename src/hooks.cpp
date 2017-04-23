@@ -12,7 +12,7 @@
 	#pragma warning(disable: 4996)
 #endif
 
-extern GetRakServerInterface_t GetRakServerInterface;
+extern logprintf_t logprintf;
 
 std::shared_ptr<urmem::hook>
 	Hooks::_hook_get_rak_server_interface,
@@ -23,15 +23,38 @@ urmem::address_t
 	Hooks::_addr_rpc,
 	Hooks::_addr_get_index_from_playerid;
 
+#ifdef _WIN32
+const char *pattern =
+"\x6A\xFF\x68\x5B\xA4\x4A\x00\x64\xA1\x00\x00" \
+"\x00\x00\x50\x64\x89\x25\x00\x00\x00\x00\x51" \
+"\x68\x18\x0E\x00\x00\xE8\xFF\xFF\xFF\xFF\x83" \
+"\xC4\x04\x89\x04\x24\x85\xC0\xC7\x44\x24\xFF" \
+"\x00\x00\x00\x00\x74\x16";
+
+const char *mask = "xxx????xxxxxxxxxxxxxxxx????x????xxxxxxxxxxx?xxxxxx";
+#else
+const char *pattern =
+"\x55\x89\xE5\x83\xEC\x18\xC7\x04\x24\xFF\xFF" \
+"\xFF\xFF\x89\x75\xFF\x89\x5D\xFF\xE8\xFF\xFF" \
+"\xFF\xFF\x89\x04\x24\x89\xC6\xE8\xFF\xFF\xFF" \
+"\xFF\x89\xF0\x8B\x5D\xFF\x8B\x75\xFF\x89\xEC" \
+"\x5D\xC3";
+
+const char *mask = "xxxxxxxxx????xx?xx?x????xxxxxx????xxxx?xx?xxxx";
+#endif
+
 bool Hooks::Init(void)
 {
 	urmem::sig_scanner scanner;
-	urmem::address_t addr{};
 
-	addr = urmem::get_func_addr(GetRakServerInterface);
-	if (scanner.init(addr)) {
-		_hook_get_rak_server_interface = std::make_shared<urmem::hook>(addr, urmem::get_func_addr(&HOOK_GetRakServerInterface));
-		return true;
+	if (scanner.init(urmem::get_func_addr(logprintf))) {
+		urmem::address_t addr{};
+
+		if (scanner.find(pattern, mask, addr)) {
+			_hook_get_rak_server_interface = std::make_shared<urmem::hook>(addr, urmem::get_func_addr(&HOOK_GetRakServerInterface));
+
+			return true;
+		}
 	}
 
 	return false;
