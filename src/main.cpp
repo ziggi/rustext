@@ -61,12 +61,10 @@ PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad( AMX *amx )
 {
-	gAmxList.push_back(amx);
 	return amx_Register(amx, PluginNatives, -1);
 }
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxUnload( AMX *amx )
 {
-	gAmxList.remove(amx);
 	return AMX_ERR_NONE;
 }
