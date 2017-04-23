@@ -35,11 +35,19 @@ native SetDefaultRussifierType(RussifierType:type);
 native RussifierType:GetDefaultRussifierType();
 
 // Update checker
-#tryinclude <a_http>
-#tryinclude "a_http"
-#tryinclude "../a_http"
+#if !defined HTTP
+	#tryinclude <a_http>
+#endif
 
-#if defined HTTP
+#if !defined HTTP
+	#tryinclude "a_http"
+#endif
+
+#if !defined HTTP
+	#tryinclude "../a_http"
+#endif
+
+#if defined HTTP && !defined RUSTEXT_DISABLE_VERSION_CHECK
 	#if defined FILTERSCRIPT
 		public OnFilterScriptInit()
 		{
