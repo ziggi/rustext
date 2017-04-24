@@ -96,8 +96,9 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 	}
 
 	if (*uniqueID != RPC_DisplayGameText &&
-		*uniqueID != RPC_InitMenu &&
-		*uniqueID != RPC_ShowTextDraw) {
+	    *uniqueID != RPC_InitMenu &&
+	    *uniqueID != RPC_ShowTextDraw &&
+	    *uniqueID != RPC_TextDrawSetString) {
 		return RPC(_this, uniqueID, bitStream, priority, reliability,
 			orderingChannel, playerId, broadcast, shiftTimestamp);
 	}
@@ -215,6 +216,28 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		}
 	} else if (*uniqueID == RPC_ShowTextDraw) {
 		const int offsetToText = 16 + 63 * 8;
+
+		// skip textdraw id and data
+		bitStream->SetReadOffset(offsetToText);
+
+		// read text
+		uint16_t textLen;
+		bitStream->Read(textLen);
+
+		char *text = new char[textLen];
+		bitStream->Read(text, textLen);
+
+		// convert
+		Converter::Process(text, textLen, Russifier::GetPlayerType(player_id));
+
+		// write converted text
+		bitStream->SetWriteOffset(offsetToText + 16);
+		bitStream->Write(text, textLen);
+
+		delete [] text;
+	} else if (*uniqueID == RPC_TextDrawSetString) {
+		const int MAX_TEXTDRAW_TEXT = 1024;
+		const int offsetToText = 16;
 
 		// skip textdraw id and data
 		bitStream->SetReadOffset(offsetToText);
