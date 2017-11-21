@@ -81,6 +81,10 @@ cell AMX_NATIVE_CALL Natives::GetPlayerRussifierType(AMX *amx, cell *params)
 		return 0;
 	}
 
+	if (!Russifier::IsPlayerEnabled(playerid)) {
+		return -1;
+	}
+
 	return Russifier::GetPlayerType(playerid);
 }
 
@@ -108,6 +112,10 @@ cell AMX_NATIVE_CALL Natives::SetDefaultRussifierType(AMX *amx, cell *params)
 cell AMX_NATIVE_CALL Natives::GetDefaultRussifierType(AMX *amx, cell *params)
 {
 	CHECK_PARAMS(0, "GetDefaultRussifierType");
+
+	if (!Russifier::IsDefaultEnabled()) {
+		return -1;
+	}
 
 	return Russifier::GetDefaultType();
 }

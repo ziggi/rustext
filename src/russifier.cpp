@@ -38,9 +38,6 @@ void Russifier::SetPlayerType(int playerid, int type)
 
 Converter::Types Russifier::GetPlayerType(int playerid)
 {
-	if (!IsPlayerEnabled(playerid)) {
-		return gDefaultType;
-	}
 	return gPlayerTypesMap[playerid];
 }
 
