@@ -108,3 +108,7 @@ mkdir build
 cd build
 cmake .. -G "Visual Studio 12"
 ```
+
+# Thanks
+
+Big thanks to [urShadow](https://github.com/urShadow) for [urmem](https://github.com/urShadow/urmem) and [Pawn.RakNet](https://github.com/urShadow/Pawn.RakNet) on which based rakserver hook code.
