@@ -1,5 +1,5 @@
 project (rustext)
-set (PLUGIN_VERSION "2.0.5")
+set (PLUGIN_VERSION "2.0.6")
 
 cmake_minimum_required (VERSION 2.8)
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
