@@ -1,19 +1,20 @@
 {
-	"user": "ziggi",
-	"repo": "rustext",
-    "include_path": "include",
+    "user": "ziggi",
+    "repo": "rustext",
     "resources": [
         {
             "name": "^rustext-(.+).zip$",
             "platform": "linux",
             "archive": true,
-            "plugins": ["plugins/rustext.so"]
+            "includes": ["rustext.inc"],
+            "plugins": ["rustext.so"]
         },
         {
             "name": "^rustext-(.+).zip$",
             "platform": "windows",
             "archive": true,
-            "plugins": ["plugins/rustext.dll"]
+            "includes": ["rustext.inc"],
+            "plugins": ["rustext.dll"]
         }
     ],
     "runtime": {
