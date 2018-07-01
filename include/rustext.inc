@@ -20,9 +20,12 @@ enum RussifierType {
 	RussifierType_Unknown3,
 	RussifierType_MG,
 	RussifierType_Community,
-	RussifierType_Ukraine,
+	RussifierType_Ukrainian,
 	RussifierType_Hungarian,
 }
+
+// RussifierType_Ukraine is deprecated
+#define RussifierType_Ukraine RussifierType_Ukrainian
 
 // Natives
 native GetRussifierVersion(version[], const size = sizeof(version));
