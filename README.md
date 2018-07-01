@@ -66,7 +66,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 ```
 
 Or you can use [russifier](https://github.com/Open-GTO/russifier) library for this.
-![russifier](https://user-images.githubusercontent.com/1020099/42131621-c1bde476-7d0e-11e8-821c-595a6a7a5f32.png)
+![russifier](https://user-images.githubusercontent.com/1020099/42131912-a08b08b8-7d15-11e8-93f6-aa0478d4b095.png)
 
 # Types
 
