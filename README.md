@@ -9,11 +9,15 @@ You can download any of the usеd russifiers [here](https://mega.nz/#F!tVhlhDCT!
 
 # Examples
 Here you can see how it works with SanLtd russifier:
+
 ![sanltd](https://cloud.githubusercontent.com/assets/1020099/18914954/db9b4ade-8597-11e6-8d72-783cfd24fb99.png)
+
 Here you can see how it works with Ukraine localization:
+
 ![ukraine](https://cloud.githubusercontent.com/assets/1020099/18914955/db9d95dc-8597-11e6-9c2b-6ae5cc05bc72.png)
 
 # Example of usage
+Base script for setting player russifier:
 ```Pawn
 #include <a_samp>
 #include <rustext>
@@ -60,6 +64,9 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 	return 0;
 }
 ```
+
+Or you can use [russifier](https://github.com/Open-GTO/russifier) library for this.
+![russifier](https://user-images.githubusercontent.com/1020099/42131621-c1bde476-7d0e-11e8-821c-595a6a7a5f32.png)
 
 # Types
 
