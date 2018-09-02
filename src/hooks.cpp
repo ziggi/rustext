@@ -186,7 +186,7 @@ bool THISCALL Hooks::HOOK_RakServer__RPC(void *_this, RPCIndex *uniqueID, RakNet
 		for (uint8_t i = 0; i < isTwoColumns + 1; i++) {
 			Converter::Process(headers[i], MAX_MENU_TEXT_SIZE, playerRussifierType);
 
-			for (uint8_t j = 0; j < itemsCount[j]; j++) {
+			for (uint8_t j = 0; j < itemsCount[i]; j++) {
 				Converter::Process(items[j][i], MAX_MENU_TEXT_SIZE, playerRussifierType);
 			}
 		}
