@@ -11,6 +11,7 @@
 #include "sampfunctions.hpp"
 #include "converter.hpp"
 #include "russifier.hpp"
+#include "format.h"
 
 extern logprintf_t logprintf;
 
@@ -101,10 +102,10 @@ cell AMX_NATIVE_CALL Natives::GetDefaultRussifierType(AMX *amx, cell *params)
 	return Russifier::GetDefaultType();
 }
 
-// native GameTextForAll(const string[], time, style);
+// native GameTextForAll(const string[], time, style, {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::GameTextForAll(AMX *amx, cell *params)
 {
-	std::string string = amx_GetCppString(amx, params[1]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[1]), params, 4);
 	int time = static_cast<int>(params[2]);
 	int style = static_cast<int>(params[3]);
 
@@ -120,11 +121,11 @@ cell AMX_NATIVE_CALL Natives::GameTextForAll(AMX *amx, cell *params)
 	return Samp::GameTextForAll(string.c_str(), time, style);
 }
 
-// native GameTextForPlayer(playerid, const string[], time, style);
+// native GameTextForPlayer(playerid, const string[], time, style, {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::GameTextForPlayer(AMX *amx, cell *params)
 {
 	int playerid = static_cast<int>(params[1]);
-	std::string string = amx_GetCppString(amx, params[2]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[2]), params, 4);
 	int time = static_cast<int>(params[3]);
 	int style = static_cast<int>(params[4]);
 
@@ -140,12 +141,12 @@ cell AMX_NATIVE_CALL Natives::GameTextForPlayer(AMX *amx, cell *params)
 	return Samp::GameTextForPlayer(playerid, string.c_str(), time, style);
 }
 
-// TextDrawCreate(Float:x, Float:y, text[]);
+// TextDrawCreate(Float:x, Float:y, text[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::TextDrawCreate(AMX *amx, cell *params)
 {
 	float x = amx_ctof(params[1]);
 	float y = amx_ctof(params[2]);
-	std::string string = amx_GetCppString(amx, params[3]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[3]), params, 4);
 
 	int length = string.length();
 	if (length == 0) {
@@ -159,11 +160,11 @@ cell AMX_NATIVE_CALL Natives::TextDrawCreate(AMX *amx, cell *params)
 	return Samp::TextDrawCreate(x, y, string.c_str());
 }
 
-// TextDrawSetString(Text:text, string[]);
+// TextDrawSetString(Text:text, string[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::TextDrawSetString(AMX *amx, cell *params)
 {
 	int text = static_cast<int>(params[1]);
-	std::string string = amx_GetCppString(amx, params[2]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[2]), params, 3);
 
 	int length = string.length();
 	if (length == 0) {
@@ -177,13 +178,13 @@ cell AMX_NATIVE_CALL Natives::TextDrawSetString(AMX *amx, cell *params)
 	return Samp::TextDrawSetString(text, string.c_str());
 }
 
-// CreatePlayerTextDraw(playerid, Float:x, Float:y, text[]);
+// CreatePlayerTextDraw(playerid, Float:x, Float:y, text[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 {
 	int playerid = static_cast<int>(params[1]);
 	float x = amx_ctof(params[2]);
 	float y = amx_ctof(params[3]);
-	std::string string = amx_GetCppString(amx, params[4]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[4]), params, 5);
 
 	int length = string.length();
 	if (length == 0) {
@@ -197,12 +198,12 @@ cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 	return Samp::CreatePlayerTextDraw(playerid, x, y, string.c_str());
 }
 
-// PlayerTextDrawSetString(playerid, PlayerText:text, string[]);
+// PlayerTextDrawSetString(playerid, PlayerText:text, string[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::PlayerTextDrawSetString(AMX *amx, cell *params)
 {
 	int playerid = static_cast<int>(params[1]);
 	int textid = static_cast<int>(params[2]);
-	std::string string = amx_GetCppString(amx, params[3]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[3]), params, 4);
 
 	int length = string.length();
 	if (length == 0) {
@@ -216,10 +217,10 @@ cell AMX_NATIVE_CALL Natives::PlayerTextDrawSetString(AMX *amx, cell *params)
 	return Samp::PlayerTextDrawSetString(playerid, textid, string.c_str());
 }
 
-// CreateMenu(title[], columns, Float:x, Float:y, Float:col1width, Float:col2width);
+// CreateMenu(title[], columns, Float:x, Float:y, Float:col1width, Float:col2width, {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::CreateMenu(AMX *amx, cell *params)
 {
-	std::string string = amx_GetCppString(amx, params[1]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[1]), params, 7);
 	int columns = static_cast<int>(params[2]);
 	float x = amx_ctof(params[3]);
 	float y = amx_ctof(params[4]);
@@ -238,12 +239,12 @@ cell AMX_NATIVE_CALL Natives::CreateMenu(AMX *amx, cell *params)
 	return Samp::CreateMenu(string.c_str(), columns, x, y, col1width, col2width);
 }
 
-// AddMenuItem(Menu:menuid, column, title[]);
+// AddMenuItem(Menu:menuid, column, title[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::AddMenuItem(AMX *amx, cell *params)
 {
 	int menuid = static_cast<int>(params[1]);
 	int column = static_cast<int>(params[2]);
-	std::string string = amx_GetCppString(amx, params[3]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[3]), params, 4);
 
 	int length = string.length();
 	if (length == 0) {
@@ -257,12 +258,12 @@ cell AMX_NATIVE_CALL Natives::AddMenuItem(AMX *amx, cell *params)
 	return Samp::AddMenuItem(menuid, column, string.c_str());
 }
 
-// SetMenuColumnHeader(menuid, column, text[]);
+// SetMenuColumnHeader(menuid, column, text[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::SetMenuColumnHeader(AMX *amx, cell *params)
 {
 	int menuid = static_cast<int>(params[1]);
 	int column = static_cast<int>(params[2]);
-	std::string string = amx_GetCppString(amx, params[3]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[3]), params, 4);
 
 	int length = string.length();
 	if (length == 0) {

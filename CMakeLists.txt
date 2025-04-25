@@ -36,5 +36,7 @@ add_samp_plugin (${PROJECT_NAME}
 	src/russifier.cpp
 	src/russifier.hpp
 	src/common.hpp
+	src/format.cpp
+	src/format.h
 	src/exports.def
 )
