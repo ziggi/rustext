@@ -122,6 +122,33 @@ int Samp::TextDrawSetString(int text, const char *string)
 	return result;
 }
 
+int Samp::TextDrawSetStringForPlayer(int text, int playerid, const char *string)
+{
+	// init
+	const int PARAMS = 3;
+
+	cell *addr;
+	cell *params = new cell [PARAMS + 1];
+
+	// set the params
+	params[0] = PARAMS * sizeof(cell);
+	params[1] = text;
+	params[2] = playerid;
+
+	int length = strlen(string);
+	amx_Allot(gAmxList.front(), length + 1, &params[3], &addr);
+	amx_SetString(addr, string, 0, 0, length + 1);
+
+	// execute
+	int result = addr_TextDrawSetStringForPlayer(gAmxList.front(), params);
+
+	// release
+	amx_Release(gAmxList.front(), params[3]);
+	delete [] params;
+
+	return result;
+}
+
 int Samp::CreatePlayerTextDraw(int playerid, float x, float y, const char *text)
 {
 	// init

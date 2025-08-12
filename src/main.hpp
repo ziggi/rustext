@@ -19,6 +19,7 @@ amx_Function_t Samp::addr_GameTextForAll;
 amx_Function_t Samp::addr_GameTextForPlayer;
 amx_Function_t Samp::addr_TextDrawCreate;
 amx_Function_t Samp::addr_TextDrawSetString;
+amx_Function_t Samp::addr_TextDrawSetStringForPlayer;
 amx_Function_t Samp::addr_CreatePlayerTextDraw;
 amx_Function_t Samp::addr_PlayerTextDrawSetString;
 amx_Function_t Samp::addr_CreateMenu;

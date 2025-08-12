@@ -178,6 +178,25 @@ cell AMX_NATIVE_CALL Natives::TextDrawSetString(AMX *amx, cell *params)
 	return Samp::TextDrawSetString(text, string.c_str());
 }
 
+// TextDrawSetStringForPlayer(Text:text, playerid, string[], {Float,_}:...);
+cell AMX_NATIVE_CALL Natives::TextDrawSetStringForPlayer(AMX *amx, cell *params)
+{
+	int text = static_cast<int>(params[1]);
+	int playerid = static_cast<int>(params[2]);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[3]), params, 4);
+
+	int length = string.length();
+	if (length == 0) {
+		return 0;
+	}
+
+	if (Russifier::IsDefaultEnabled()) {
+		Converter::Process(string, Russifier::GetDefaultType());
+	}
+
+	return Samp::TextDrawSetStringForPlayer(text, playerid, string.c_str());
+}
+
 // CreatePlayerTextDraw(playerid, Float:x, Float:y, text[], {Float,_}:...);
 cell AMX_NATIVE_CALL Natives::CreatePlayerTextDraw(AMX *amx, cell *params)
 {

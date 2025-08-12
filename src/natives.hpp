@@ -23,6 +23,7 @@ public:
 
 	static cell AMX_NATIVE_CALL TextDrawCreate(AMX *amx, cell *params);
 	static cell AMX_NATIVE_CALL TextDrawSetString(AMX *amx, cell *params);
+	static cell AMX_NATIVE_CALL TextDrawSetStringForPlayer(AMX *amx, cell *params);
 
 	static cell AMX_NATIVE_CALL CreatePlayerTextDraw(AMX *amx, cell *params);
 	static cell AMX_NATIVE_CALL PlayerTextDrawSetString(AMX *amx, cell *params);

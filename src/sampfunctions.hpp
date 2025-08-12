@@ -15,6 +15,7 @@ public:
 
 	static int TextDrawCreate(float x, float y, const char *text);
 	static int TextDrawSetString(int text, const char *string);
+	static int TextDrawSetStringForPlayer(int text, int playerid, const char *string);
 
 	static int CreatePlayerTextDraw(int playerid, float x, float y, const char *text);
 	static int PlayerTextDrawSetString(int playerid, int text, const char *string);
@@ -27,6 +28,7 @@ public:
 	static amx_Function_t addr_GameTextForPlayer;
 	static amx_Function_t addr_TextDrawCreate;
 	static amx_Function_t addr_TextDrawSetString;
+	static amx_Function_t addr_TextDrawSetStringForPlayer;
 	static amx_Function_t addr_CreatePlayerTextDraw;
 	static amx_Function_t addr_PlayerTextDrawSetString;
 	static amx_Function_t addr_CreateMenu;
