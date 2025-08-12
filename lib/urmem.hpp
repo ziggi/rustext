@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <memory>
 #include <mutex>
+#include <functional>
 
 class urmem {
 public:
