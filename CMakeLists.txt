@@ -1,7 +1,7 @@
 project (rustext)
 set (PLUGIN_VERSION "2.0.10")
 
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.8...9.9)
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include (AMXConfig)
