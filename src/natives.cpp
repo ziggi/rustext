@@ -125,7 +125,7 @@ cell AMX_NATIVE_CALL Natives::GameTextForAll(AMX *amx, cell *params)
 cell AMX_NATIVE_CALL Natives::GameTextForPlayer(AMX *amx, cell *params)
 {
 	int playerid = static_cast<int>(params[1]);
-	std::string string = format_amxstring(amx, get_amxaddr(amx, params[2]), params, 4);
+	std::string string = format_amxstring(amx, get_amxaddr(amx, params[2]), params, 5);
 	int time = static_cast<int>(params[3]);
 	int style = static_cast<int>(params[4]);
 
