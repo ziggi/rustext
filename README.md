@@ -110,7 +110,7 @@ make
 
 # Build (Visual Studio)
 ```bash
-cd FCNPC
+cd rustext
 mkdir build
 cd build
 cmake .. -G "Visual Studio 12"
